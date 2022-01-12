@@ -7,7 +7,6 @@ import statistics as st
 IntervalWeekday = {}
 IntervalWeekend = {}
 
-#used the new file that has no 'NA' attributes
 filename = 'newActivity.csv'
 
 with open(filename) as f:
@@ -18,7 +17,6 @@ with open(filename) as f:
   wr.write(str (header[0]) + "," + str (header[1]) + ","+ str (header[2]))
   wr.write("\n")
 
-#setting a for loop to go through each rows entirely and declaring each rows as the corresponding variables.
   for row in reader :
 
     steps = row[0] 
@@ -28,7 +26,6 @@ with open(filename) as f:
 
     interval = int(row[2]) 
 
-#if statement differentiating weekdays and weekends
     if dt.datetime.date(day).weekday() <5: 
       row.append("Weekday")
       IntervalWeekday.setdefault(interval,[])
@@ -38,14 +35,11 @@ with open(filename) as f:
       IntervalWeekend.setdefault(interval,[])
       IntervalWeekend[interval].append(int(steps))
 
-
-#writing new factor variable in the new dataset
     wr.write(str(row[0]))
     wr.write(str (row[0]) + "," + str (row[1]) + ","+ str (row[2]) + "," + str (row[3]))
     wr.write("\n")
   wr.close()
 
-#creating lists to store average steps per interval for weekdays and weekends and using statistics to count the average
 averageWeekdays = []
 for i in IntervalWeekday.keys():
     averageWeekdays.append(st.mean(IntervalWeekday.get(i)))
